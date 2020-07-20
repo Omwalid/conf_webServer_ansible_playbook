@@ -1,0 +1,10 @@
+---
+- set_fact:
+   server_name: "{{ outer_item.domaine.split('.') }}"
+
+- include: ./create_l.yml
+
+- include: './{{ ansible_os_family }}_configure_port.yml'  
+
+- include: './{{ ansible_os_family}}_virtualhost_conf.yml'
+

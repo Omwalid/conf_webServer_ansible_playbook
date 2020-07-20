@@ -1,0 +1,8 @@
+---
+- name: configure listen port
+  lineinfile:
+   path: /etc/httpd/conf/httpd.conf
+   insertafter: '^Listen 80'
+   line: Listen {{ outer_item.listen_port  }}
+  notify:
+   - restart-httpd

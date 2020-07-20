@@ -1,0 +1,25 @@
+---
+- name: create a project dir in /var/www
+  copy:
+   src: '{{ outer_item.project_path }}'
+   dest: '/var/www/{{ outer_item.domaine }}/code'
+   owner: '{{ user }}'
+   group: '{{ user }}'
+   mode: 0755
+
+- name: create a log dir
+  file:
+   path: '/var/www/{{ outer_item.domaine }}/logs/'
+   owner: '{{ user }}'
+   group: '{{ user }}'
+   state: directory
+
+- name: create access and error log file 
+  file:
+   path: '/var/www/{{ outer_item.domaine }}/logs/{{ item  }}'
+   owner: '{{ user }}'
+   group: '{{ user }}'
+   state: touch
+  loop:
+   - access.log
+   - error.log

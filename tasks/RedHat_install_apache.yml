@@ -1,0 +1,24 @@
+---
+- name: install/upgrade httpd 
+  yum:
+   name: httpd
+   update_cache: yes
+   state: latest
+  notify:
+   - start-httpd
+
+- name: create sites-available and enabled
+  file:
+   path: '/etc/httpd/{{ item  }}'
+   owner: root
+   group: root
+   state: directory
+  with_items:
+   - sites-available
+   - sites-enabled
+
+- name: Include sites-enabled in httpd.conf
+  lineinfile:
+   path: /etc/httpd/conf/httpd.conf
+   insertafter: '^IncludeOptional conf.d/*.conf'
+   line: IncludeOptional sites-enabled/*.conf

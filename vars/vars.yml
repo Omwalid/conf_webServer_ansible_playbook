@@ -1,0 +1,12 @@
+---
+domaines:
+ - domaine: walid.com
+   email_admin: omw@walid.com
+   listen_port: 80
+   project_path: /home/omw/www/webSite1/
+ - domaine: bigwalas.com
+   email_admin: omw@bigwalas.com
+   listen_port: 8080
+   project_path: /home/omw/www/webSite2/
+
+

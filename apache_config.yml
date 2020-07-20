@@ -1,0 +1,22 @@
+---
+- name: configuring an apache web server
+  hosts: web_servers
+  vars:
+   user: omw
+  vars_files: 
+  - vars/vars.yml
+
+
+  tasks: 
+  - block:
+     - include: 'tasks/{{ ansible_os_family  }}_install_apache.yml'
+     - include: tasks/main.yml
+       loop: '{{ domaines }}'
+       loop_control: 
+        loop_var: outer_item
+    become: yes
+
+  handlers:
+  - include: handlers/handlers.yml
+  become: yes
+

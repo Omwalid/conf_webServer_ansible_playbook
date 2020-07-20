@@ -1,0 +1,16 @@
+<VirtualHost *:{{ outer_item.listen_port }}>
+        ServerName {{ outer_item.domaine }}
+        ServerAdmin {{ outer_item.email_admin }}
+        ServerAlias
+
+        DocumentRoot /var/www/{{ outer_item.domaine }}/code
+       # ProxyPassMatch ^/(.*\.php(/.*)?)$ unix:/run/php/php7.2-fpm.sock|fcgi://localhost/var/www/phptest.com
+
+        ErrorLog /var/www/{{ outer_item.domaine }}/logs/error.log
+        CustomLog /var/www/{{ outer_item.domaine }}/logs/access.log combined
+
+        <directory /var/www/{{ outer_item.domaine }}>
+             Options -Indexes
+        </directory>
+
+</VirtualHost>
