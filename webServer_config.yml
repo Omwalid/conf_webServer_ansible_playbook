@@ -1,5 +1,5 @@
 ---
-- name: configuring an apache web server
+- name: configuring a web server
   hosts: web_servers
   vars:
    user: omw
