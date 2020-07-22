@@ -1,0 +1,14 @@
+---
+- name: setup the yum repo
+  copy:
+   src: files/nginx.repo
+   dest: /etc/yum.repos.d/nginx.repo
+
+- name: install/upgrade nginx 
+  yum:
+   name: nginx
+   update_cache: yes
+   state: latest
+  notify:
+   - start-nginx
+ 

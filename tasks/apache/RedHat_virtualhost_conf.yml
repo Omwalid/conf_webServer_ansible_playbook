@@ -1,12 +1,4 @@
 ---
-- name: install/upgrade httpd 
-  yum:
-   name: httpd
-   update_cache: yes
-   state: latest
-  notify:
-   - start-httpd
-
 - name: create sites-available and enabled
   file:
    path: '/etc/httpd/{{ item  }}'
@@ -22,3 +14,16 @@
    path: /etc/httpd/conf/httpd.conf
    insertafter: '^IncludeOptional conf.d/*.conf'
    line: IncludeOptional sites-enabled/*.conf
+
+- name: create a virtualhost
+  template:
+   src: templates/apache_virtualhost.conf.j2
+   dest: '/etc/httpd/sites-available/{{ server_name.0 }}.conf'
+ 
+- name: enable our site
+  file:
+   src: '/etc/httpd/sites-available/{{ server_name.0 }}.conf'
+   dest: '/etc/httpd/sites-enabled/{{ server_name.0 }}.conf'
+   state: link
+  notify:
+   - restart-httpd 

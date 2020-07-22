@@ -1,0 +1,19 @@
+server {
+        listen  {{ outer_item.listen_port  }};
+        server_name {{ outer_item.domaine  }};
+
+        access_log /var/www/{{ outer_item.domaine}}/logs/access.log;
+        error_log /var/www/{{ outer_item.domaine}}/logs/error.log;
+	
+	root /var/www/{{ outer_item.domaine}}/code;
+        index index.html;
+
+
+        location ~ /\.ht {
+              
+              deny all;
+              access_log off;
+              
+                         }
+                   
+        }

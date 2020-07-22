@@ -1,0 +1,9 @@
+---
+- name: install/upgrade httpd 
+  yum:
+   name: httpd
+   update_cache: yes
+   state: latest
+  notify:
+   - start-httpd
+

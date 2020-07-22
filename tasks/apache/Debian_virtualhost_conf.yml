@@ -1,7 +1,14 @@
 ---
+- name: diable default in sites-enabled
+  file:
+   path: /etc/apache2/sites-enabled/000-default.conf
+   state: absent
+  notify:
+   - restart-apache
+  
 - name: create a virtualhost
   template:
-   src: templates/virtualhost.conf.j2
+   src: templates/apache_virtualhost.conf.j2
    dest: '/etc/apache2/sites-available/{{ server_name.0 }}.conf'
  
 - name: enable our site

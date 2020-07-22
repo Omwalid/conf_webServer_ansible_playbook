@@ -4,7 +4,8 @@
 
 - include: ./create_l.yml
 
-- include: './{{ ansible_os_family }}_configure_port.yml'  
-
-- include: './{{ ansible_os_family}}_virtualhost_conf.yml'
+- include: './{{ webServer }}/{{ ansible_os_family }}_configure_port.yml'  
+  when:  webServer == "apache"
+ 
+- include: './{{ webServer }}/{{ ansible_os_family}}_virtualhost_conf.yml'
 

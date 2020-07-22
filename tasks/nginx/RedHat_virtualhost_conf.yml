@@ -1,0 +1,36 @@
+---
+- name: create sites-available and enabled
+  file:
+   path: '/etc/nginx/{{ item  }}'
+   owner: root
+   group: root
+   state: directory
+  with_items:
+   - sites-available
+   - sites-enabled
+
+- name: comment conf.d in nginx.conf
+  lineinfile:
+   path: /etc/nginx/nginx.conf
+   regex: '^(\s*)[include /etc/nginx/conf.d/*.conf;]'
+   line: '    #include /etc/nginx/conf.d/*.conf;'
+   state: present
+
+- name: Include sites-enabled in nginx.conf
+  lineinfile:
+   path: /etc/nginx/nginx.conf
+   insertafter: '^(\s*)[#include /etc/nginx/conf.d/*.conf;]'
+   line: '    include /etc/nginx/sites-available/*.conf;'
+   
+- name: create a virtualhost
+  template:
+   src: templates/nginx_virtualhost.conf.j2
+   dest: '/etc/nginx/sites-available/{{ server_name.0 }}.conf'
+ 
+- name: enable our site
+  file:
+   src: '/etc/nginx/sites-available/{{ server_name.0 }}.conf'
+   dest: '/etc/nginx/sites-enabled/{{ server_name.0 }}.conf'
+   state: link
+  notify:
+   - restart-nginx

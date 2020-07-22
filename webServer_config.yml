@@ -9,7 +9,7 @@
 
   tasks: 
   - block:
-     - include: 'tasks/{{ ansible_os_family  }}_install_apache.yml'
+     - include: 'tasks/{{ webServer  }}/{{ ansible_os_family  }}_install_{{ webServer }}.yml'
      - include: tasks/main.yml
        loop: '{{ domaines }}'
        loop_control: 

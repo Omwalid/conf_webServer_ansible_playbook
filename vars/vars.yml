@@ -1,4 +1,5 @@
 ---
+webServer: apache
 domaines:
  - domaine: walid.com
    email_admin: omw@walid.com
